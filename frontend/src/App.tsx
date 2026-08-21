@@ -10,7 +10,7 @@ import Admin from './pages/Admin';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/cook">
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
