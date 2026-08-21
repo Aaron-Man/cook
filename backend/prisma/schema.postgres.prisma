@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Status {
+  id        Int      @id @default(autoincrement())
+  content   String
+  mood      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Journal {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  mood      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Dish {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  category    String
+  ingredients String?
+  difficulty  Int      @default(1)
+  imageUrl    String?
+  available   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  dishId    Int
+  dish      Dish     @relation(fields: [dishId], references: [id])
+  note      String?
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
